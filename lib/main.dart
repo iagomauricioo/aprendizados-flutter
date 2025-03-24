@@ -21,16 +21,12 @@ class MyApp extends StatelessWidget {
         ),
         body: ListView(
           children: const [
-            Task('Aprender Flutter'),
-            Task('Aprender Dart'),
-            Task('Passear com cachorro'),
-            Task('Cozinhar'),
-            Task('Ir para academia'),
-            Task('Fazer compras'),
-            Task('Fazer feira'),
-            Task('Lavar roupa'),
-            Task('Tirar o lixo'),
-            Task('Estudar cálculo'),
+            Task('Aprender Flutter no café da manhã comendo sucrilhos', urlImagem: 'https://images.pexels.com/photos/4385547/pexels-photo-4385547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
+            Task('Passear com cachorro', urlImagem: 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=600',),
+            Task('Cozinhar', urlImagem: 'https://images.pexels.com/photos/2403391/pexels-photo-2403391.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',),
+            Task('Ir para academia', urlImagem: 'https://images.pexels.com/photos/31271772/pexels-photo-31271772/free-photo-of-treinamento-de-boxeador-focado-em-ambientes-fechados-na-academia.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',),
+            Task('Fazer compras', urlImagem: 'https://images.pexels.com/photos/1050244/pexels-photo-1050244.jpeg?auto=compress&cs=tinysrgb&w=600',),
+            Task('Aprender Dart', urlImagem: 'https://images.pexels.com/photos/4385547/pexels-photo-4385547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
           ],
         ),
         bottomNavigationBar: Container(
@@ -55,10 +51,12 @@ class MyApp extends StatelessWidget {
 
 class Task extends StatelessWidget {
   final String nome;
-  const Task(this.nome, {Key? key}) : super(key: key);
+  final String? urlImagem;
+  const Task(this.nome, {this.urlImagem, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final imageUrl = urlImagem ?? 'https://images.pexels.com/photos/392018/pexels-photo-392018.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -72,19 +70,33 @@ class Task extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              color: Colors.white70,
               width: 100,
               height: 120,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(imageUrl),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(nome, style: const TextStyle(fontWeight: FontWeight.bold)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(5, (index) => const Icon(Icons.star, color: Colors.amber, size: 20)),
-                )
-              ],
+                children: [
+                  Container(
+                    width: 200,
+                    child: Text(
+                      nome,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(5, (index) => const Icon(Icons.star, color: Colors.amber, size: 20)),
+                  )
+                ]
             ),
             ElevatedButton(
               onPressed: () {},
